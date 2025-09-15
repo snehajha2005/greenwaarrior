@@ -30,7 +30,12 @@ const PickupScheduling = () => {
       id: 'PU2024001', 
       status: 'completed', 
       wasteType: 'E-Waste', 
-      date: '2024-01-15',
+      date: '12 Sep, 10:00 AM',
+      timeline: [
+        { step: 'Scheduled', time: '12 Sep, 10:00 AM', completed: true },
+        { step: 'Picked', time: '12 Sep, 12:30 PM', completed: true },
+        { step: 'Reached Recycler', time: 'Completed', completed: true }
+      ],
       location: 'Picked up from Sector 15',
       recycler: 'Green Tech Recyclers'
     },
@@ -38,17 +43,14 @@ const PickupScheduling = () => {
       id: 'PU2024002', 
       status: 'in-transit', 
       wasteType: 'Hazardous', 
-      date: '2024-01-18',
+      date: '15 Sep, 2:00 PM',
+      timeline: [
+        { step: 'Scheduled', time: '15 Sep, 2:00 PM', completed: true },
+        { step: 'Picked', time: '15 Sep, 3:30 PM', completed: true },
+        { step: 'Reached Recycler', time: 'Pending', completed: false }
+      ],
       location: 'En route to facility',
       recycler: 'Safe Disposal Co.'
-    },
-    { 
-      id: 'PU2024003', 
-      status: 'scheduled', 
-      wasteType: 'Bulk Items', 
-      date: '2024-01-20',
-      location: 'Pickup scheduled',
-      recycler: 'City Waste Management'
     }
   ];
 
@@ -65,6 +67,11 @@ const PickupScheduling = () => {
     }
 
     toast.success('Pickup scheduled successfully! You will receive confirmation shortly.');
+    
+    // Show notification banner
+    setTimeout(() => {
+      toast.success('Your pickup was successfully completed. ✅');
+    }, 2000);
     
     // Reset form
     setFormData({
@@ -111,12 +118,19 @@ const PickupScheduling = () => {
       <main className="pt-20 pb-8">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-heading font-bold text-foreground mb-4">
-              Pickup & Scheduling
+            <h1 className="text-4xl font-heading font-bold text-foreground mb-4 animate-fade-in">
+              🚛 Pickup & Scheduling
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground animate-fade-in">
               Schedule pickup for e-waste, hazardous materials, and bulk items
             </p>
+            
+            {/* Notification Banner */}
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg max-w-md mx-auto">
+              <div className="text-sm text-green-700">
+                ✅ Your pickup was successfully completed.
+              </div>
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
@@ -257,7 +271,7 @@ const PickupScheduling = () => {
                 <CardContent>
                   <div className="space-y-4">
                     {trackingData.map((pickup) => (
-                      <div key={pickup.id} className="border rounded-lg p-4 space-y-3">
+                      <div key={pickup.id} className="border rounded-lg p-4 space-y-4 hover:shadow-md transition-all duration-200">
                         <div className="flex justify-between items-start">
                           <div>
                             <div className="font-medium">#{pickup.id}</div>
@@ -269,11 +283,27 @@ const PickupScheduling = () => {
                           </Badge>
                         </div>
                         
-                        <div className="text-sm space-y-1">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="h-3 w-3" />
-                            <span>{pickup.date}</span>
+                        {/* Timeline */}
+                        <div className="space-y-2">
+                          <h4 className="font-medium text-sm">Tracking Timeline</h4>
+                          <div className="space-y-2">
+                            {pickup.timeline.map((step, index) => (
+                              <div key={index} className="flex items-center gap-3">
+                                <div className={`w-4 h-4 rounded-full ${step.completed ? 'bg-success' : 'bg-muted border-2 border-dashed'}`}>
+                                  {step.completed && <CheckCircle className="h-3 w-3 text-white" />}
+                                </div>
+                                <div className="flex-1">
+                                  <div className={`text-sm ${step.completed ? 'text-foreground' : 'text-muted-foreground'}`}>
+                                    {step.step}
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">{step.time}</div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
+                        </div>
+
+                        <div className="text-sm space-y-1">
                           <div className="flex items-center gap-2">
                             <MapPin className="h-3 w-3" />
                             <span>{pickup.location}</span>

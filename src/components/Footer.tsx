@@ -30,7 +30,10 @@ const Footer = () => {
               <span className="text-xl font-heading font-bold">Green Warrior</span>
             </div>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              Smart Waste, Clean Future. Making waste management rewarding and fun for everyone.
+              Making waste management rewarding and fun for everyone.
+            </p>
+            <p className="text-accent-yellow font-semibold text-sm mt-2">
+              "Smart Waste, Clean Future"
             </p>
           </div>
 
@@ -72,7 +75,7 @@ const Footer = () => {
                   <a
                     key={social.label}
                     href={social.href}
-                    className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
+                    className="bg-white/10 p-2 rounded-full hover:bg-white/20 hover:scale-110 transition-all duration-200"
                     aria-label={social.label}
                   >
                     <IconComponent className="h-5 w-5" />

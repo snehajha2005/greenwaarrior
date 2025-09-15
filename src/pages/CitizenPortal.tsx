@@ -20,26 +20,26 @@ const CitizenPortal = () => {
   const [reportData, setReportData] = useState({ location: '', description: '' });
 
   const userStats = {
-    points: 1250,
+    points: 450,
     rank: 42,
     scansToday: 8,
     totalScans: 157,
-    badges: ['Eco Warrior', 'Recycling Pro', 'Green Champion']
+    badges: ['🌱 Eco Starter', '♻️ Recycler', '🏆 Community Hero']
   };
 
   const leaderboard = [
-    { rank: 1, name: 'Green School Academy', points: 5420, type: 'School' },
-    { rank: 2, name: 'Eco Society Heights', points: 4890, type: 'Society' },
-    { rank: 3, name: 'Ward 15 Community', points: 4120, type: 'Ward' },
-    { rank: 4, name: 'Clean City College', points: 3890, type: 'School' },
-    { rank: 5, name: 'Sunrise Apartments', points: 3650, type: 'Society' },
+    { rank: 1, name: 'Sunrise School', points: 1200, type: 'School', emoji: '🥇' },
+    { rank: 2, name: 'Green Valley Society', points: 980, type: 'Society', emoji: '🥈' },
+    { rank: 3, name: 'Ward 14', points: 860, type: 'Ward', emoji: '🥉' },
+    { rank: 4, name: 'Eco Club College', points: 750, type: 'School', emoji: '4' },
+    { rank: 5, name: 'BlueSky Apartments', points: 600, type: 'Society', emoji: '5' },
   ];
 
   const rewards = [
-    { name: 'Plant Sapling Kit', points: 500, image: '🌱', available: true },
-    { name: 'Eco-friendly Tote Bag', points: 300, image: '🛍️', available: true },
-    { name: 'Recycled Notebook', points: 200, image: '📓', available: true },
-    { name: '10% Off Green Products', points: 150, image: '🏷️', available: true },
+    { name: '5% Discount – GreenMart', points: 50, image: '🏷️', available: true, type: 'coupon' },
+    { name: 'Free Cloth Bag – EcoShop', points: 100, image: '🛍️', available: true, type: 'coupon' },
+    { name: 'Plant Sapling Kit', points: 300, image: '🌱', available: true, type: 'product' },
+    { name: 'Recycled Notebook', points: 200, image: '📓', available: true, type: 'product' },
   ];
 
   const handleQRScan = () => {
@@ -50,12 +50,12 @@ const CitizenPortal = () => {
 
     // Simulate QR scanning result
     const isCorrect = Math.random() > 0.3; // 70% chance of correct disposal
-    const points = isCorrect ? Math.floor(Math.random() * 20) + 10 : 0;
+    const points = isCorrect ? 10 : 0;
     
     setLastScan({ result: isCorrect ? 'correct' : 'incorrect', points });
     
     if (isCorrect) {
-      toast.success(`✅ Correct disposal! You earned ${points} points!`);
+      toast.success('✅ Waste disposal logged successfully! +10 points');
     } else {
       toast.error('❌ Incorrect disposal. Please check segregation guidelines.');
     }
@@ -97,12 +97,13 @@ const CitizenPortal = () => {
           </div>
 
           <Tabs defaultValue="scanner" className="space-y-8">
-            <TabsList className="grid grid-cols-2 lg:grid-cols-5 w-full">
-              <TabsTrigger value="scanner">QR Scanner</TabsTrigger>
-              <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-              <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
-              <TabsTrigger value="report">Report Issues</TabsTrigger>
-              <TabsTrigger value="awareness">Awareness</TabsTrigger>
+            <TabsList className="grid grid-cols-2 lg:grid-cols-6 w-full">
+              <TabsTrigger value="scanner">🔍 QR Scanner</TabsTrigger>
+              <TabsTrigger value="dashboard">🏆 Rewards</TabsTrigger>
+              <TabsTrigger value="leaderboard">📊 Leaderboard</TabsTrigger>
+              <TabsTrigger value="report">⚠️ Report Issues</TabsTrigger>
+              <TabsTrigger value="awareness">📚 Awareness</TabsTrigger>
+              <TabsTrigger value="green-score">🌿 Green Score</TabsTrigger>
             </TabsList>
 
             {/* QR Scanner Tab */}
@@ -212,12 +213,15 @@ const CitizenPortal = () => {
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {rewards.map((reward, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:shadow-md transition-all duration-200 hover:scale-102">
                           <div className="flex items-center gap-3">
                             <span className="text-2xl">{reward.image}</span>
                             <div>
                               <div className="font-medium">{reward.name}</div>
                               <div className="text-sm text-muted-foreground">{reward.points} points</div>
+                              <Badge variant="outline" className="text-xs mt-1">
+                                {reward.type}
+                              </Badge>
                             </div>
                           </div>
                           <Button 
@@ -250,15 +254,11 @@ const CitizenPortal = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {leaderboard.map((entry) => (
-                      <div key={entry.rank} className="flex items-center justify-between p-4 border rounded-lg hover:bg-card-hover transition-colors">
+                     {leaderboard.map((entry) => (
+                      <div key={entry.rank} className="flex items-center justify-between p-4 border rounded-lg hover:bg-card-hover hover:scale-105 transition-all duration-200 hover:shadow-md">
                         <div className="flex items-center gap-4">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm
-                            ${entry.rank === 1 ? 'bg-accent-yellow text-white' : 
-                              entry.rank === 2 ? 'bg-gray-400 text-white' :
-                              entry.rank === 3 ? 'bg-amber-600 text-white' :
-                              'bg-muted text-muted-foreground'}`}>
-                            {entry.rank}
+                          <div className="text-2xl">
+                            {entry.emoji}
                           </div>
                           <div>
                             <div className="font-medium">{entry.name}</div>
@@ -390,6 +390,65 @@ const CitizenPortal = () => {
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
+
+            {/* Green Score Tab */}
+            <TabsContent value="green-score">
+              <Card className="card-eco">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Leaf className="h-5 w-5 text-success" />
+                    Your Green Score
+                  </CardTitle>
+                  <CardDescription>
+                    Track your environmental impact and carbon credits
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid lg:grid-cols-3 gap-6">
+                    <div className="text-center p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl border">
+                      <div className="text-4xl font-bold text-primary mb-2">78</div>
+                      <div className="text-lg font-semibold mb-1">Green Score</div>
+                      <div className="text-sm text-muted-foreground">out of 100</div>
+                      <div className="mt-4">
+                        <div className="w-full bg-muted rounded-full h-3">
+                          <div className="bg-gradient-to-r from-green-500 to-blue-500 h-3 rounded-full" style={{ width: '78%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-green-50 rounded-xl border">
+                      <div className="text-4xl font-bold text-secondary mb-2">45</div>
+                      <div className="text-lg font-semibold mb-1">Carbon Credits</div>
+                      <div className="text-sm text-muted-foreground">accumulated</div>
+                      <Button variant="outline" className="mt-4 w-full">
+                        <Star className="mr-2 h-4 w-4" />
+                        View Details
+                      </Button>
+                    </div>
+
+                    <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl border">
+                      <div className="text-4xl font-bold text-accent-orange mb-2">₹450</div>
+                      <div className="text-lg font-semibold mb-1">Redeemable Value</div>
+                      <div className="text-sm text-muted-foreground">in partner shops</div>
+                      <Button className="btn-primary mt-4 w-full">
+                        <Gift className="mr-2 h-4 w-4" />
+                        Redeem Now
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                    <h3 className="font-semibold text-green-800 mb-2">💡 Improve Your Score</h3>
+                    <ul className="text-sm text-green-700 space-y-1">
+                      <li>• Scan more bins correctly (+5 points each)</li>
+                      <li>• Complete weekly challenges (+20 points)</li>
+                      <li>• Help neighbors with segregation (+10 points)</li>
+                      <li>• Report waste issues (+15 points)</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
           </Tabs>
         </div>

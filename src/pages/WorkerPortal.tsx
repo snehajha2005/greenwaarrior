@@ -21,18 +21,18 @@ const WorkerPortal = () => {
   const workerData = {
     id: 'GW2024001',
     name: 'Rajesh Kumar',
-    earnings: 12500,
-    incentives: 2300,
+    earnings: 2350,
+    incentives: 500,
     tasksCompleted: 89,
     rating: 4.8,
     level: 'Senior Collector'
   };
 
   const todayTasks = [
-    { id: 1, location: 'Sector 15, Block A', bins: 25, status: 'completed', time: '09:00 AM' },
-    { id: 2, location: 'Green Park Society', bins: 18, status: 'completed', time: '11:30 AM' },
-    { id: 3, location: 'Municipal Market', bins: 32, status: 'in-progress', time: '02:00 PM' },
-    { id: 4, location: 'School Zone Area', bins: 22, status: 'pending', time: '04:30 PM' },
+    { id: 1, location: 'Bin #14 – Park Road', bins: 25, status: 'completed', time: '09:00 AM', emoji: '✅' },
+    { id: 2, location: 'Bin #22 – Main Market', bins: 18, status: 'pending', time: '11:30 AM', emoji: '❌' },
+    { id: 3, location: 'Bin #27 – School Lane', bins: 32, status: 'pending', time: '02:00 PM', emoji: '❌' },
+    { id: 4, location: 'Bin #31 – Community Center', bins: 22, status: 'pending', time: '04:30 PM', emoji: '❌' },
   ];
 
   const handleLogin = () => {
@@ -172,27 +172,25 @@ const WorkerPortal = () => {
                 <CardContent>
                   <div className="space-y-4">
                     {todayTasks.map((task) => (
-                      <div key={task.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div key={task.id} className="flex items-center justify-between p-4 border rounded-lg hover:shadow-md hover:scale-102 transition-all duration-200">
                         <div className="flex items-center gap-4">
-                          <div className={`w-3 h-3 rounded-full ${
-                            task.status === 'completed' ? 'bg-success' :
-                            task.status === 'in-progress' ? 'bg-warning' : 'bg-muted'
-                          }`}></div>
+                          <div className="text-xl">
+                            {task.emoji}
+                          </div>
                           <div>
                             <div className="font-medium">{task.location}</div>
                             <div className="text-sm text-muted-foreground">
-                              {task.bins} bins • {task.time}
+                              {task.time}
                             </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
                           <Badge variant={
-                            task.status === 'completed' ? 'default' :
-                            task.status === 'in-progress' ? 'secondary' : 'outline'
+                            task.status === 'completed' ? 'default' : 'outline'
                           }>
-                            {task.status}
+                            {task.status === 'completed' ? 'Completed' : 'Pending'}
                           </Badge>
-                          {task.status === 'in-progress' && (
+                          {task.status === 'pending' && (
                             <Button 
                               size="sm" 
                               onClick={() => handleTaskComplete(task.id)}
@@ -282,20 +280,20 @@ const WorkerPortal = () => {
                   <CardContent>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
-                        <Shield className="h-4 w-4 text-success mt-0.5" />
-                        <span>Always wear protective gear</span>
+                        <span className="text-lg">🧤</span>
+                        <span>Always wear protective gloves</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <Shield className="h-4 w-4 text-success mt-0.5" />
+                        <span className="text-lg">😷</span>
+                        <span>Use masks for dust protection</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-lg">🦺</span>
+                        <span>Wear reflective safety jackets</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-lg">⚠️</span>
                         <span>Handle hazardous waste carefully</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Shield className="h-4 w-4 text-success mt-0.5" />
-                        <span>Report injuries immediately</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Shield className="h-4 w-4 text-success mt-0.5" />
-                        <span>Follow lifting techniques</span>
                       </li>
                     </ul>
                   </CardContent>

@@ -73,10 +73,10 @@ const Dashboard = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className="text-4xl font-heading font-bold text-foreground">
-                Green Warrior Dashboard
+              <h1 className="text-4xl font-heading font-bold text-foreground animate-fade-in">
+                📊 Green Warrior Dashboard
               </h1>
-              <p className="text-xl text-muted-foreground">
+              <p className="text-xl text-muted-foreground animate-fade-in">
                 Real-time insights into our collective environmental impact
               </p>
             </div>
@@ -88,11 +88,11 @@ const Dashboard = () => {
 
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
-            <Card className="card-eco">
+            <Card className="card-eco hover:scale-105 transition-all duration-300">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Total Users</p>
+                    <p className="text-sm font-medium text-muted-foreground">👥 Total Users</p>
                     <p className="text-2xl font-bold text-primary">{overallStats.totalUsers.toLocaleString()}</p>
                   </div>
                   <Users className="h-8 w-8 text-primary" />
@@ -100,11 +100,11 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            <Card className="card-eco">
+            <Card className="card-eco hover:scale-105 transition-all duration-300">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Bins Scanned</p>
+                    <p className="text-sm font-medium text-muted-foreground">♻️ Bins Scanned</p>
                     <p className="text-2xl font-bold text-secondary">{(overallStats.binsScanned / 1000000).toFixed(1)}M</p>
                   </div>
                   <Recycle className="h-8 w-8 text-secondary" />
@@ -112,11 +112,11 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            <Card className="card-eco">
+            <Card className="card-eco hover:scale-105 transition-all duration-300">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Cities Covered</p>
+                    <p className="text-sm font-medium text-muted-foreground">🗺️ Cities Covered</p>
                     <p className="text-2xl font-bold text-accent-orange">{overallStats.citiesCovered}</p>
                   </div>
                   <MapPin className="h-8 w-8 text-accent-orange" />
@@ -176,7 +176,7 @@ const Dashboard = () => {
               <CardContent>
                 <div className="space-y-4">
                   {recentActivity.map((activity, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-card-hover transition-colors">
+                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-card-hover hover:scale-102 transition-all duration-200 hover:shadow-md">
                       <div className="flex items-center gap-3">
                         {getActivityIcon(activity.type)}
                         <div>
@@ -253,7 +253,7 @@ const Dashboard = () => {
                       <div className="flex items-center gap-3">
                         <div className="flex-1 bg-muted rounded-full h-2">
                           <div 
-                            className={`${category.color} h-2 rounded-full transition-all duration-300`}
+                            className={`${category.color} h-2 rounded-full progress-animated`}
                             style={{ width: `${category.percentage}%` }}
                           ></div>
                         </div>
@@ -287,7 +287,7 @@ const Dashboard = () => {
                       <div className="flex items-center gap-3">
                         <div className="flex-1 bg-muted rounded-full h-2">
                           <div 
-                            className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
+                            className="bg-gradient-primary h-2 rounded-full progress-animated"
                             style={{ width: `${city.progress}%` }}
                           ></div>
                         </div>

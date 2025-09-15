@@ -192,14 +192,14 @@ const Learning = () => {
                       </div>
 
                       <div className="flex gap-4">
-                        <Button onClick={resetGame} variant="outline" className="flex-1">
+                        <Button onClick={resetGame} variant="outline" className="flex-1 hover:scale-105 transition-transform">
                           Reset Game
                         </Button>
-                        <Button className="btn-primary flex-1">
+                        <Button className="btn-primary flex-1 hover:scale-105 transition-transform">
                           {gameItems.every(item => item.dropped) ? 
                             <>
                               <Trophy className="mr-2 h-4 w-4" />
-                              Completed!
+                              Completed! 🎉
                             </> :
                             `${gameItems.filter(item => item.dropped).length}/${gameItems.length} Sorted`
                           }
@@ -241,7 +241,7 @@ const Learning = () => {
                         <p className="text-muted-foreground mb-6">
                           Answer {quizQuestions.length} questions about waste management and sustainability
                         </p>
-                        <Button onClick={startQuiz} className="btn-primary">
+                        <Button onClick={startQuiz} className="btn-primary hover:scale-105 transition-transform">
                           Start Quiz
                         </Button>
                       </div>
@@ -302,7 +302,7 @@ const Learning = () => {
                         <p className="text-muted-foreground mb-4">
                           {resource.description}
                         </p>
-                        <Button className="btn-primary w-full">
+                        <Button className="btn-primary w-full hover:scale-105 transition-transform">
                           <Download className="mr-2 h-4 w-4" />
                           Access Resource
                         </Button>
@@ -324,13 +324,13 @@ const Learning = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {[
-                      { name: 'Waste Segregation Master', requirement: 'Complete quiz with 100% score', earned: false },
-                      { name: 'Eco Warrior', requirement: 'Complete kids game 3 times', earned: true },
-                      { name: 'Green Champion', requirement: 'Access all resources', earned: false },
-                      { name: 'Sustainability Expert', requirement: 'Complete all activities', earned: false },
-                    ].map((cert, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                      {[
+                        { name: 'Waste Segregation Master', requirement: 'Complete quiz with 100% score', earned: false },
+                        { name: 'Eco Warrior', requirement: 'Complete kids game 3 times', earned: true },
+                        { name: 'Green Champion', requirement: 'Access all resources', earned: false },
+                        { name: 'Sustainability Expert', requirement: 'Complete all activities', earned: false },
+                      ].map((cert, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:shadow-md hover:scale-102 transition-all duration-200">
                         <div className="flex items-center gap-3">
                           {cert.earned ? 
                             <CheckCircle className="h-5 w-5 text-success" /> :
@@ -339,10 +339,15 @@ const Learning = () => {
                           <div>
                             <div className="font-medium">{cert.name}</div>
                             <div className="text-sm text-muted-foreground">{cert.requirement}</div>
+                            {cert.earned && (
+                              <div className="text-xs text-success mt-1">
+                                🏆 This certificate is proudly awarded to [Child's Name] for completing the Green Warrior Waste Learning program.
+                              </div>
+                            )}
                           </div>
                         </div>
                         {cert.earned && (
-                          <Button size="sm" className="btn-primary">
+                          <Button size="sm" className="btn-primary hover:scale-105 transition-transform">
                             Download
                           </Button>
                         )}
