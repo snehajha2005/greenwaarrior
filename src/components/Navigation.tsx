@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Leaf, Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Leaf, Menu, X, LogOut } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +18,25 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Check authentication status whenever location changes
+    const checkAuth = () => {
+      const token = localStorage.getItem('greenwarrior_auth');
+      setIsAuthenticated(!!token);
+    };
+    checkAuth();
+  }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('greenwarrior_auth');
+    localStorage.removeItem('greenwarrior_user');
+    setIsAuthenticated(false);
+    navigate('/login');
+    // Close mobile menu if open
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  };
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Citizen Portal', href: '/citizen-portal' },
@@ -59,16 +80,30 @@ const Navigation = () => {
 
           {/* Auth Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="rounded-full">
-                Login
+            {isAuthenticated ? (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="rounded-full flex items-center gap-2" 
+                onClick={handleLogout}
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
               </Button>
-            </Link>
-            <Link to="/signup">
-              <Button className="btn-primary">
-                Sign Up
-              </Button>
-            </Link>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="outline" size="sm" className="rounded-full">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button className="btn-primary">
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,16 +134,29 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t">
-                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full rounded-full">
-                    Login
+                {isAuthenticated ? (
+                  <Button 
+                    variant="outline" 
+                    className="w-full rounded-full flex items-center justify-center gap-2"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Logout
                   </Button>
-                </Link>
-                <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="btn-primary w-full">
-                    Sign Up
-                  </Button>
-                </Link>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="outline" className="w-full rounded-full">
+                        Login
+                      </Button>
+                    </Link>
+                    <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
+                      <Button className="btn-primary w-full">
+                        Sign Up
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
