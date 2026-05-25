@@ -19,11 +19,6 @@ Green Warrior is an eco-friendly web platform designed to spread environmental a
   
 
 ## 🌐 Live Website
-https://greenwarrior.netlify.app/
+Link 1: https://greenwarrior.netlify.app/
+Link 2: https://ulbwastemanagement.netlify.app/
 
-## 📂 Project Structure
-
-```bash
-src/        # Main source code
-public/     # Static assets
-components/ # Reusable UI components
